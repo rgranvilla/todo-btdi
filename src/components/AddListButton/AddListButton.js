@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FiX, FiPlus } from 'react-icons/fi';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import { addList } from '../../features/todosReducer';
 
@@ -85,4 +85,4 @@ function AddListButton() {
   return formOpen ? renderForm() : renderAddButton();
 }
 
-export default AddListButton;
+export default connect()(AddListButton);

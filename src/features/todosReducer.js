@@ -69,7 +69,14 @@ export const todosReducer = createSlice({
       return newState;
     },
     deleteCard: (state, action) => {
-      //Todo
+      state.map(lists =>
+        lists.listId === action.payload.listId
+          ? (lists.cards = [
+              lists.cards.slice(0, action.payload.indexCard),
+              lists.cards.slice(action.payload.indexCard + 1),
+            ].flat())
+          : { ...lists },
+      );
     },
   },
 });

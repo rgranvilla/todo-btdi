@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 
 import { deleteList } from '../../features/todosReducer';
 import Card from '../Card/Card';
@@ -8,7 +8,7 @@ import AddCardButton from '../AddCardButton/AddCardButton';
 
 import { Container } from './styles';
 
-function List({ title, cards, listId }) {
+function List({ title, cards, listId, indexList }) {
   const dispatch = useDispatch();
   const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
@@ -51,7 +51,8 @@ function List({ title, cards, listId }) {
             <Card
               listId={listId}
               key={card.id}
-              index={index}
+              indexCard={index}
+              indexList={indexList}
               cardId={card.id}
               content={card.content}
             />
@@ -66,4 +67,4 @@ function List({ title, cards, listId }) {
   );
 }
 
-export default List;
+export default connect()(List);

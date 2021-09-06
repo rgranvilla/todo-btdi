@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 import { Container } from './styles';
 
@@ -17,6 +18,7 @@ function Dashboard() {
           cards={list.cards}
           listId={list.listId}
           key={list.listId}
+          indexList={index}
         />
       ))}
       <AddListButton />
@@ -24,4 +26,8 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  lists: state.lists,
+});
+
+export default connect(mapStateToProps)(Dashboard);

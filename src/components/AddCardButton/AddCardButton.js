@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { FiX, FiPlus } from 'react-icons/fi';
 import TextArea from 'react-textarea-autosize';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 
 import { addCard } from '../../features/todosReducer';
 
@@ -86,4 +86,4 @@ function AddCardButton({ listId }) {
   return formOpen ? renderForm() : renderAddButton();
 }
 
-export default AddCardButton;
+export default connect()(AddCardButton);
