@@ -1,34 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import { FiTrash2, FiEdit } from 'react-icons/fi';
-import { MdDragHandle } from 'react-icons/md';
 import { useDispatch, connect } from 'react-redux';
 
 import { deleteCard } from '../../features/todosReducer';
+import CardModal from '../CardModal/CardModal';
 
-import { Container, GrabbingBar } from './styles';
+import { Container } from './styles';
 
 function Card({ content, cardId, listId, indexCard, indexList }) {
   const dispatch = useDispatch();
+
+  const [showModal, setShowModal] = useState(false);
+
+  function handleShowModal() {
+    setShowModal(prev => !prev);
+  }
 
   function handleDeleteCard() {
     dispatch(deleteCard({ indexCard, indexList, cardId, listId }));
   }
 
   return (
-    <Container>
-      <div className="wrapper">
-        <header>
-          <FiEdit />
-          <FiTrash2 onClick={handleDeleteCard} />
-        </header>
-        <main>
-          <p>{content}</p>
-        </main>
-        <GrabbingBar>
-          <MdDragHandle />
-        </GrabbingBar>
-      </div>
-    </Container>
+    <Draggable draggableId={String(cardId)} index={indexCard}>
+      {provided => (
+        <Container
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <div className="wrapper">
+            <header>
+              <FiEdit onClick={handleShowModal} />
+              <FiTrash2 onClick={handleDeleteCard} />
+              <CardModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                content={content}
+                cardId={cardId}
+                listId={listId}
+                indexCard={indexCard}
+                indexList={indexList}
+              />
+            </header>
+            <main>
+              <p>{content}</p>
+            </main>
+          </div>
+        </Container>
+      )}
+    </Draggable>
   );
 }
 

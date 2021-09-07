@@ -5,59 +5,78 @@ export const todosReducer = createSlice({
   name: 'todos',
   initialState: [
     {
-      listId: 0,
+      listId: uuidv4(),
       listTitle: 'To Do',
       cards: [
         {
-          id: 0,
-          content: 'This is a test card',
+          id: uuidv4(),
+          content: 'List All Tasks.',
         },
         {
-          id: 1,
-          content: 'This is another test card 1',
+          id: uuidv4(),
+          content: 'List the tasks not yet completed.',
         },
         {
-          id: 2,
-          content: 'This is another test card 2',
+          id: uuidv4(),
+          content: 'List tasks already completed.',
+        },
+        {
+          id: uuidv4(),
+          content:
+            'Mark a particular task as completed. (Visually show that it has been completed)',
+        },
+        {
+          id: uuidv4(),
+          content: 'Insert new tasks.',
+        },
+        {
+          id: uuidv4(),
+          content: 'Change the description of a task.',
+        },
+        {
+          id: uuidv4(),
+          content: 'Delete task from list.',
+        },
+        {
+          id: uuidv4(),
+          content:
+            'Display Counter: Total Tasks, Completed Tasks, and Uncompleted Tasks.',
         },
       ],
     },
     {
-      listId: 1,
+      listId: uuidv4(),
       listTitle: 'In Progress',
-      cards: [
-        {
-          id: 3,
-          content: 'This is another test card 3',
-        },
-      ],
+      cards: [],
     },
     {
-      listId: 2,
+      listId: uuidv4(),
       listTitle: 'Completed',
       cards: [],
     },
   ],
   reducers: {
     addList: (state, action) => {
+      const newState = state;
       const newList = {
         id: uuidv4(),
         listTitle: action.payload,
         cards: [],
       };
-      return [...state, newList];
+      newState.push(newList);
+      return newState;
     },
     deleteList: (state, action) => {
       return state.filter(list => list.listId !== action.payload.listId);
     },
-    addCard: (state, action) => {
+    addCard: (state, { payload }) => {
       const newCard = {
         id: uuidv4(),
-        content: action.payload.content,
+        content: payload.content,
       };
 
       const newState = state.map(list => {
-        if (list.listId === action.payload.listId) {
+        if (list.listId === payload.listId) {
           return {
             ...list,
             cards: [...list.cards, newCard],
@@ -78,10 +97,64 @@ export const todosReducer = createSlice({
           : { ...lists },
       );
     },
+    updateCard: (state, action) => {
+      state.map(lists =>
+        lists.listId === action.payload.listId
+          ? (lists.cards[action.payload.indexCard].content =
+              action.payload.content)
+          : { ...lists },
+      );
+    },
+    dragHappened: (state, action) => {
+      const {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd,
+        type,
+      } = action.payload;
+
+      // draggind lists around
+      if (type === 'list') {
+        const list = state.splice(droppableIndexStart, 1);
+        state.splice(droppableIndexEnd, 0, ...list);
+        return state;
+      }
+
+      // in the same list
+      if (droppableIdStart === droppableIdEnd) {
+        const list = state.find(list => droppableIdStart === list.listId);
+        const card = list.cards.splice(droppableIndexStart, 1);
+        list.cards.splice(droppableIndexEnd, 0, ...card);
+      }
+
+      // other list
+      if (droppableIdStart !== droppableIdEnd) {
+        //find the list where drag happened
+        const listStart = state.find(list => droppableIdStart === list.listId);
+
+        //pull out the card from this list
+        const card = listStart.cards.splice(droppableIndexStart, 1);
+
+        // find the list where drag ended
+        const listEnd = state.find(list => droppableIdEnd === list.listId);
+
+        // put the card in the new list
+        listEnd.cards.splice(droppableIndexEnd, 0, ...card);
+      }
+
+      return state;
+    },
   },
 });
 
-export const { addList, deleteList, addCard, deleteCard } =
-  todosReducer.actions;
+export const {
+  addList,
+  deleteList,
+  addCard,
+  deleteCard,
+  updateCard,
+  dragHappened,
+} = todosReducer.actions;
 
 export default todosReducer.reducer;

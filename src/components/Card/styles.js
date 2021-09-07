@@ -31,23 +31,3 @@ export const Container = styled.div`
     }
   }
 `;
-
-export const GrabbingBar = styled.div`
-  height: 1rem;
-  border-radius: 0 0 0.25rem 0.25rem;
-  transform: translateY(1px);
-
-  display: flex;
-  justify-content: center;
-
-  cursor: grabbing;
-  background: var(--bg-button-card);
-
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-
-    color: var(--txt-white);
-    transform: translateY(-0.125rem);
-  }
-`;
