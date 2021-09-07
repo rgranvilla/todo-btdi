@@ -14,6 +14,8 @@ function List({ title, cards, listId, indexList }) {
 
   const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
+  //o hook useEffect é utilizado para verificar sempre que ouver uma
+  //modificação no titúlo e atualizar o estado do showDeleteIcon.
   useEffect(() => {
     switch (title) {
       case 'To Do':
@@ -30,8 +32,10 @@ function List({ title, cards, listId, indexList }) {
     }
   }, [title]);
 
+  //Verifica o tamanho da lista e retorna o valor de cartões contidos.
   const counterCards = cards?.length ? cards.length : 0;
 
+  //Função reponsável por lidar com excluir uma lista da nossa aplicação
   function handleDeleteList() {
     dispatch(deleteList({ listId }));
   }
@@ -82,4 +86,5 @@ function List({ title, cards, listId, indexList }) {
   );
 }
 
+//conecta o component ao store.
 export default connect()(List);

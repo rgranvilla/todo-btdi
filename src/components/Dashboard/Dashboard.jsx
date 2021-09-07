@@ -11,6 +11,8 @@ import List from '../List/List';
 function Dashboard() {
   const dispatch = useDispatch();
 
+  //função reponsável por disparar as atualizações de posição quando se
+  //solta um cartão ou lista
   function onDragEnd(result) {
     let { destination, source, draggableId, type } = result;
 
@@ -30,6 +32,7 @@ function Dashboard() {
     );
   }
 
+  //carrega o estado "todos" para a constante "lists"
   const lists = useSelector(state => state.todos);
 
   return (
@@ -57,8 +60,11 @@ function Dashboard() {
   );
 }
 
+//Recebe um argumento state e retorna um objeto simples contendo os dados de
+//que o componente conectado precisa
 const mapStateToProps = state => ({
   lists: state.lists,
 });
 
+//conecta o component ao store.
 export default connect(mapStateToProps)(Dashboard);

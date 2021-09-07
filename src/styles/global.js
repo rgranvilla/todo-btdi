@@ -13,9 +13,6 @@ export default createGlobalStyle`
     /*** Principals Colors ***/
     --primary: #0B4576;
     --secondary: #EA7025;
-    --active: #29A30A;
-    --alert: #CA322D;
-    --unselected: #E7F2F1;
 
     /*** Background Colors ***/
     --bg-button: #E7F2F1;
@@ -29,12 +26,6 @@ export default createGlobalStyle`
     --txt-title: #555555;
     --txt-input: #222222;
     --txt-white: #FFFFFF;
-
-    /*** Cores Tag Areas ***/
-    --front: #4ccd41;
-    --back: #9666ff;
-    --mobile: #ef233c;
-    --general: #fca311;
   }
 
   
@@ -61,21 +52,5 @@ export default createGlobalStyle`
 
   ul {
     list-style: none;
-  }
-
-    /*** Default Area Colors ***/
-    .front {
-    background: var(--front);
-  }
-  .back {
-    background: var(--back);
-  }
-
-  .mobile {
-    background: var(--mobile);
-  }
-
-  .general {
-    background: var(--general);
   }
 `;

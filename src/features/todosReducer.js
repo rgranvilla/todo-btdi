@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
+//createSlice é responsável por criar a configuração do reducer
 export const todosReducer = createSlice({
   name: 'todos',
+  //Fornece o estado inicial da store.
   initialState: [
     {
       listId: uuidv4(),
@@ -55,6 +57,8 @@ export const todosReducer = createSlice({
       cards: [],
     },
   ],
+
+  //Fornece todos os reducers da nossa aplicação
   reducers: {
     addList: (state, action) => {
       const newState = state;
@@ -114,32 +118,32 @@ export const todosReducer = createSlice({
         type,
       } = action.payload;
 
-      // draggind lists around
+      // arrastando lista
       if (type === 'list') {
         const list = state.splice(droppableIndexStart, 1);
         state.splice(droppableIndexEnd, 0, ...list);
         return state;
       }
 
-      // in the same list
+      // para mesma lista
       if (droppableIdStart === droppableIdEnd) {
         const list = state.find(list => droppableIdStart === list.listId);
         const card = list.cards.splice(droppableIndexStart, 1);
         list.cards.splice(droppableIndexEnd, 0, ...card);
       }
 
-      // other list
+      // para outra outra
       if (droppableIdStart !== droppableIdEnd) {
         //find the list where drag happened
         const listStart = state.find(list => droppableIdStart === list.listId);
 
-        //pull out the card from this list
+        //retira um cartão da lista'
         const card = listStart.cards.splice(droppableIndexStart, 1);
 
-        // find the list where drag ended
+        // encontra a lista para foi arrastado
         const listEnd = state.find(list => droppableIdEnd === list.listId);
 
-        // put the card in the new list
+        // coloca o cartão na lista destino
         listEnd.cards.splice(droppableIndexEnd, 0, ...card);
       }
 

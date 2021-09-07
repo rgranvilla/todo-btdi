@@ -4,8 +4,6 @@ import { useDispatch, connect } from 'react-redux';
 import TextArea from 'react-textarea-autosize';
 import Button from '@material-ui/core/Button';
 
-import { updateCard } from '../../features/todosReducer';
-
 import {
   Background,
   Container,
@@ -13,6 +11,8 @@ import {
   CardContainer,
   ControlContainer,
 } from './styles';
+
+import { updateCard } from '../../features/todosReducer';
 
 function CardModal({
   content,
@@ -25,9 +25,11 @@ function CardModal({
 }) {
   const dispatch = useDispatch();
 
+  //estado reponsável por armazenar o texto do cartão.
   const [text, setText] = useState(content);
   const modalRef = useRef();
 
+  //função reponsável pela animação do modal.
   const animation = useSpring({
     config: {
       duration: 250,
@@ -42,6 +44,7 @@ function CardModal({
     }
   };
 
+  //caso a tecla escape seja precionada, realiza o fechamento do modal.
   const keyPress = useCallback(
     e => {
       if (e.key === 'Escape' && showModal) {
@@ -51,16 +54,19 @@ function CardModal({
     [setShowModal, showModal],
   );
 
+  //lida com a alteração dos dados no input
   function handleInputChange(e) {
     setText(e.target.value);
   }
 
+  //dispara a atualização dos dados do cartão no store e realiza o fechamento do modal.
   function handleUpdateCard() {
     const content = text;
     dispatch(updateCard({ indexCard, content, listId }));
     setShowModal(prev => !prev);
   }
 
+  //adiciona um evento de escuta sempre que uma tecla é precionada.
   useEffect(() => {
     document.addEventListener('keydown', keyPress);
     return () => document.removeEventListener('keydown', keyPress);
@@ -105,4 +111,5 @@ function CardModal({
   );
 }
 
+//conecta o component ao store.
 export default connect()(CardModal);
