@@ -1,6 +1,6 @@
 <h3 align="center">
 <br>
-🚧 Avaliação React em andamento... 🚧
+Release Version 1.0.0
 <br>
 <br>
 
@@ -65,12 +65,12 @@ Pontos que serão avaliados:
 - [x] Definir layout da aplicação
 - [x] Escolhas das ferramentas
   - [x] Definir e justificar o uso das ferramentas
-- [ ] Desenvolvimento da aplicação
+- [x] Desenvolvimento da aplicação
   - [x] Implementação do layout
   - [x] Criar o controle de estado com Redux
   - [x] Criar regras de negócio
   - [x] Salvar as tarefas no LocalStorage
-  - [] Checar os comentários de cada função
+  - [x] Checar os comentários de cada função
 
 <br>
 
