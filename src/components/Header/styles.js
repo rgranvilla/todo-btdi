@@ -11,6 +11,7 @@ export const Container = styled.div`
   align-items: center;
 
   h1 {
+    position: fixed;
     color: var(--txt-white);
     padding-left: 2rem;
   }
