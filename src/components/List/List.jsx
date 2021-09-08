@@ -19,11 +19,7 @@ function List({ title, cards, listId, indexList }) {
   useEffect(() => {
     switch (title) {
       case 'To Do':
-        setShowDeleteIcon(false);
-        break;
       case 'In Progress':
-        setShowDeleteIcon(false);
-        break;
       case 'Completed':
         setShowDeleteIcon(false);
         break;
@@ -37,7 +33,7 @@ function List({ title, cards, listId, indexList }) {
 
   //Função reponsável por lidar com excluir uma lista da nossa aplicação
   function handleDeleteList() {
-    dispatch(deleteList({ listId }));
+    dispatch(deleteList(listId));
   }
 
   return (

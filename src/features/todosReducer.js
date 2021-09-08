@@ -63,7 +63,7 @@ export const todosReducer = createSlice({
     addList: (state, action) => {
       const newState = state;
       const newList = {
-        id: uuidv4(),
+        listId: uuidv4(),
         listTitle: action.payload,
         cards: [],
       };
@@ -71,7 +71,8 @@ export const todosReducer = createSlice({
       return newState;
     },
     deleteList: (state, action) => {
-      return state.filter(list => list.listId !== action.payload.listId);
+      const newState = state.filter(list => list.listId !== action.payload);
+      return newState;
     },
     addCard: (state, { payload }) => {
       const newCard = {
